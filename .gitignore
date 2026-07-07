@@ -1,0 +1,4 @@
+.DS_Store
+
+# 测试用本地配置，包含敏感密钥，不提交到 git
+constant.go
