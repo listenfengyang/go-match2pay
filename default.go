@@ -46,18 +46,19 @@ const (
 	CurrencyDAS = "DAS" // DAI Solanas
 
 	// paymentGatewayName values
-	GatewayDOGECOIN  = "DOGECOIN"
-	GatewaySOL       = "SOL"
-	GatewayETH       = "ETH"
-	GatewayBTC       = "BTC"
-	GatewayBNB       = "BNB"
-	GatewayLTC       = "LTC"
-	GatewayXRP       = "XRP"
-	GatewayUSDTTRC20 = "USDT TRC20"
-	GatewayUSDTERC20 = "USDT ERC20"
-	GatewayUSDTBEP20 = "USDT BEP20"
-	GatewayUSDTSOL   = "USDT SOL"
-	GatewayUSDCSOL   = "USDC SOL"
-	GatewayUSDCERC20 = "USDC ERC20"
-	GatewayUSDCBEP20 = "USDC BEP20"
+	GatewayDOGECOIN   = "DOGECOIN"
+	GatewaySOL        = "SOL"
+	GatewayETH        = "ETH"
+	GatewayBTC        = "BTC"
+	GatewayBNB        = "BNB"
+	GatewayLTC        = "LTC"
+	GatewayXRP        = "XRP"
+	GatewayUSDTTRC20  = "USDT TRC20"
+	GatewayUSDTERC20  = "USDT ERC20"
+	GatewayUSDTBEP20  = "USDT BEP20"
+	GatewayUSDTSOL    = "USDT SOL"
+	GatewayUSDCSOL    = "USDC SOL"
+	GatewayUSDCERC20  = "USDC ERC20"
+	GatewayUSDCBEP20  = "USDC BEP20"
+	GatewayBINANCEPAY = "BINANCEPAY" // 币安支付（Binance Pay）：入金后 checkoutUrl 跳转币安 App/Web
 )

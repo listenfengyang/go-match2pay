@@ -15,6 +15,8 @@ import (
 //   - DOGE：paymentCurrency="DOG", paymentGatewayName="DOGECOIN"
 //   - SOL：paymentCurrency="SOL", paymentGatewayName="SOL"  （仅入金）
 //   - ETH：paymentCurrency="ETH", paymentGatewayName="ETH"
+//   - Binance Pay：paymentCurrency="BNB"（或其他币安支持币种）, paymentGatewayName="BINANCEPAY"
+//     → 响应中 checkoutUrl 即为跳转币安 App/Web 的支付链接
 func (cli *Client) Deposit(req Match2PayDepositReq) (*Match2PayDepositRsp, error) {
 	// 自动填充固定参数
 	req.APIToken = cli.Params.APIToken
@@ -104,4 +106,32 @@ func (cli *Client) Deposit(req Match2PayDepositReq) (*Match2PayDepositRsp, error
 		return nil, fmt.Errorf("%s (paymentId=%s)", errMsg, result.PaymentID)
 	}
 	return &result, nil
+}
+
+// DepositWithBinancePay 发起币安支付（Binance Pay）入金请求
+//
+// 流程说明：
+//  1. 调用 Match2Pay 入金接口，指定 paymentGatewayName="BINANCEPAY"
+//  2. 响应中 checkoutUrl 即为跳转至币安 App 或 Web 的支付链接
+//  3. 将用户重定向到 rsp.CheckoutUrl 完成支付
+//
+// 参数说明：
+//   - currency：法币种类，如 "USD"
+//   - amount：法币金额
+//   - paymentCurrency：加密货币代码，如 "BNB"（币安支持的任意加密货币均可）
+//   - customer：客户信息
+//
+// 示例：
+//
+//	rsp, err := cli.DepositWithBinancePay("USD", 100.0, CurrencyBNB, customer)
+//	if err != nil { ... }
+//	// 将用户重定向到 rsp.CheckoutUrl
+func (cli *Client) DepositWithBinancePay(currency string, amount float64, paymentCurrency string, customer Customer) (*Match2PayDepositRsp, error) {
+	return cli.Deposit(Match2PayDepositReq{
+		Currency:           currency,
+		Amount:             amount,
+		PaymentCurrency:    paymentCurrency,
+		PaymentGatewayName: GatewayBINANCEPAY,
+		Customer:           customer,
+	})
 }

@@ -9,8 +9,10 @@ Match2Pay v2 Go SDK，支持加密货币入金（Deposit）和出金（Withdrawa
 | 入金/出金 | DOGE | `DOG` | `DOGECOIN` |
 | 入金/出金 | ETH | `ETH` | `ETH` |
 | **仅入金** | Solana | `SOL` | `SOL` |
+| **仅入金** | 币安支付 | `BNB`（或其他币安支持币种） | `BINANCEPAY` |
 
 > ⚠️ Solana (SOL) 仅支持入金，不支持出金。
+> 💡 Binance Pay 入金后，响应中的 `checkoutUrl` 即为跳转币安 App/Web 的支付链接。
 
 ## 安装
 
@@ -82,6 +84,34 @@ rsp, err := client.Deposit(match2pay.Match2PayDepositReq{
     Amount:             100.00,
     PaymentCurrency:    "ETH",
     PaymentGatewayName: "ETH",
+    Customer:           customer,
+})
+```
+
+### 币安支付（Binance Pay）入金
+
+Match2Pay 支持通过 Binance Pay 完成入金。调用后，响应中的 `checkoutUrl` 即为跳转币安 App 或 Web 的支付链接，将用户重定向到该地址即可完成支付。
+
+```go
+// 方式一：使用便捷方法 DepositWithBinancePay
+rsp, err := client.DepositWithBinancePay(
+    "USD",                    // 法币种类
+    100.00,                   // 法币金额
+    match2pay.CurrencyBNB,    // 加密货币代码（BNB 或其他币安支持的币种）
+    customer,
+)
+if err != nil {
+    // 处理错误
+}
+// 将用户重定向到 checkoutUrl，即可在币安 App/Web 完成支付
+redirectURL := rsp.CheckoutUrl
+
+// 方式二：使用通用 Deposit 方法
+rsp, err := client.Deposit(match2pay.Match2PayDepositReq{
+    Currency:           "USD",
+    Amount:             100.00,
+    PaymentCurrency:    match2pay.CurrencyBNB,
+    PaymentGatewayName: match2pay.GatewayBINANCEPAY,
     Customer:           customer,
 })
 ```

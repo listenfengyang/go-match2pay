@@ -117,13 +117,15 @@ type Match2PayWithdrawRsp struct {
 
 // CryptoTransactionInfo 加密货币交易详情
 type CryptoTransactionInfo struct {
-	TxID           string  `json:"txid"`           // 交易哈希
-	Confirmations  string  `json:"confirmations"`  // 确认数
-	Amount         float64 `json:"amount"`         // 交易金额
-	ConfirmedTime  string  `json:"confirmedTime"`  // 确认时间
-	Status         string  `json:"status"`         // 状态：DONE
-	ProcessingFee  float64 `json:"processingFee"`  // 手续费
-	ConversionRate float64 `json:"conversionRate"` // 汇率
+	TxID                string  `json:"txid"`                // 交易哈希
+	Confirmations       int     `json:"confirmations"`       // 确认数
+	Amount              float64 `json:"amount"`              // 交易金额
+	TransactionCurrency string  `json:"transactionCurrency"` // 加密货币种类
+	ConfirmedTime       string  `json:"confirmedTime"`       // 确认时间
+	Status              string  `json:"status"`              // 状态：DONE
+	ProcessingFee       float64 `json:"processingFee"`       // 手续费
+	ConversionRate      float64 `json:"conversionRate"`      // 汇率
+	BlockchainType      string  `json:"blockchainType"`      // 区块链类型（如 ETHEREUM）
 }
 
 // Match2PayCallbackReq 回调通知参数（入金 & 出金通用）
@@ -140,4 +142,6 @@ type Match2PayCallbackReq struct {
 	FinalAmount           float64                 `json:"finalAmount"`           // 最终法币金额
 	FinalCurrency         string                  `json:"finalCurrency"`         // 最终法币种类
 	ConversionRate        float64                 `json:"conversionRate"`        // 汇率
+	SettlementCurrency    string                  `json:"settlementCurrency"`    // 结算货币种类
+	SettlementAmount      float64                 `json:"settlementAmount"`      // 结算金额
 }
